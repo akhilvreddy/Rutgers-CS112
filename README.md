@@ -1,3 +1,5 @@
-# CS112
+# Computer Science 112
 
-Assignments for CS112 with Professor Antonio G. 
+Assignments for CS112 with Professor Antonio M Garcia
+
+Please follow both [Rutgers University's Principles of Academic Integrity](http://academicintegrity.rutgers.edu/) and the [Rutgers Department of Computer Science's Academic Integrity Policy](https://www.cs.rutgers.edu/academics/undergraduate/academic-integrity-policy).
