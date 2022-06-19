@@ -146,7 +146,7 @@ public class Collage {
 	    collagePicture.show();
     }
 
-    /*
+    /**
      * Updates collagePicture to be a collage of tiles from original Picture.
      * collagePicture will have collageDimension x collageDimension tiles, 
      * where each tile has tileDimension X tileDimension pixels.
@@ -165,7 +165,7 @@ public class Collage {
         collagePicture.show();
     }
 
-    /*
+    /**
      * Colorizes the tile at (collageCol, collageRow) with component 
      * (see Week 9 slides, the code for color separation is at the 
      *  book's website)
@@ -176,7 +176,7 @@ public class Collage {
      */
     public void colorizeTile (String component,  int collageCol, int collageRow) {
 
-        for (int i = 0; i < collagePicture.height()/tileDimension; i++) {
+        for (int i = 0; i < collagePicture.width()/tileDimension; i++) {
             for (int j = 0; j < collagePicture.height()/tileDimension; j++) {
 
                 if(i==collageRow && j==collageCol){
@@ -186,31 +186,28 @@ public class Collage {
 
                             Color pixelColor = collagePicture.get(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j));
 
-                            int r = pixelColor.getRed();
-                            int g = pixelColor.getGreen();
-                            int b = pixelColor.getBlue();
-
                             if(component.equals("red")) {
+                                int r = pixelColor.getRed();
                                 collagePicture.set(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j), new Color(r, 0, 0));
                             }
                             else if(component.equals("green")) {
+                                int g = pixelColor.getGreen();
                                 collagePicture.set(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j), new Color(0, g, 0));
                             }
                             else if(component.equals("blue")){
+                                int b = pixelColor.getBlue();
                                 collagePicture.set(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j), new Color(0, 0, b));
                             }
                         }
                     }
-
                 }
-
             }
         }
 
         collagePicture.show();
     }
 
-    /*
+    /**
      * Replaces the tile at collageCol,collageRow with the image from filename
      * Tile (0,0) is the upper leftmost tile
      *
@@ -224,7 +221,7 @@ public class Collage {
         Picture scaledReplacementTile = new Picture(tileDimension, tileDimension);
         scale(replacementTile, scaledReplacementTile);
 
-        for (int i = 0; i < collagePicture.height()/tileDimension; i++) {
+        for (int i = 0; i < collagePicture.width()/tileDimension; i++) {
             for (int j = 0; j < collagePicture.height()/tileDimension; j++) {
                 if(i==collageRow && j==collageCol){
                     copy(i*tileDimension, j*tileDimension, scaledReplacementTile, collagePicture);
@@ -243,23 +240,33 @@ public class Collage {
      */
     public void grayscaleTile (int collageCol, int collageRow) {
         
-        for (int i = 0; i < collagePicture.height()/tileDimension; i++) {
+        for (int i = 0; i < collagePicture.width()/tileDimension; i++) {
             for (int j = 0; j < collagePicture.height()/tileDimension; j++) {
-
                 if(i==collageRow && j==collageCol){
-                    
                     for(int pixelRow = 0; pixelRow < tileDimension; pixelRow++){
                         for(int pixelCol = 0; pixelCol < tileDimension; pixelCol++){
                             Color pixelColor = collagePicture.get(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j));
-                            //pixelColor.toGray();
+                            Color greyPixelColor = toGray(pixelColor);
+
+                            collagePicture.set(pixelRow + (tileDimension * i), pixelCol + (tileDimension * j), greyPixelColor);
                         }
                     }
-
                 }
             }
         }
-        
+        collagePicture.show();
     }
+
+    /**
+     * Copies the picture source onto the picture target by finding taking in
+     * the top left corner and pastes the image from there.  
+     * 
+     * @param row the row you want to want to start pasting your image in
+     * @param col the column you want to start pasting your image in
+     * @param source the original picture that you want to paste 
+     * @param target the picture you want your picure to get pasted too
+     * @return void (nothing, you are just pasting an image)
+     */
 
     public static void copy(int row, int col, Picture source, Picture target) {
         for (int i = 0; i < source.height(); i++) {
