@@ -40,7 +40,12 @@ public class Collage {
      */
     public Collage (String filename) {
 
-        // WRITE YOUR CODE HERE
+        this.collageDimension = 4; 
+        this.tileDimension = 150; 
+        this.originalPicture = new Picture(filename);
+        this.collagePicture = new Picture(tileDimension*collageDimension, tileDimension*collageDimension); 
+        scale(originalPicture, collagePicture);
+
     }
 
     /*
@@ -55,9 +60,13 @@ public class Collage {
      */    
     public Collage (String filename, int td, int cd) {
 
-        // WRITE YOUR CODE HERE
-    }
+        this.collageDimension = cd; 
+        this.tileDimension = td; 
+        this.originalPicture = new Picture(filename);
+        this.collagePicture = new Picture(tileDimension*collageDimension, tileDimension*collageDimension); 
+        scale(originalPicture, collagePicture);
 
+    }
 
     /*
      * Scales the Picture @source into Picture @target size.
@@ -68,8 +77,19 @@ public class Collage {
      * @param target is the 
      */
     public static void scale (Picture source, Picture target) {
-
-        // WRITE YOUR CODE HERE
+        
+        int width  = target.width();
+        int height = target.height(); 
+        
+        for (int targetCol = 0; targetCol < width; targetCol++) {
+            for (int targetRow = 0; targetRow < height; targetRow++) {
+                int sourceCol = targetCol * source.width()  / width;
+                int sourceRow = targetRow * source.height() / height;
+                Color color = source.get(sourceCol, sourceRow);
+                target.set(targetCol, targetRow, color);
+            }
+        }   
+        
     }
 
      /*
@@ -132,8 +152,17 @@ public class Collage {
      * where each tile has tileDimension X tileDimension pixels.
      */    
     public void makeCollage () {
+        
+        Picture tilePicture = new Picture(tileDimension, tileDimension);
+        scale(originalPicture, tilePicture);
+        
+        for (int i = 0; i < collagePicture.height()/tileDimension; i++) {
+            for (int j = 0; j < collagePicture.height()/tileDimension; j++) {
+                copy(i*tileDimension, j*tileDimension, tilePicture, collagePicture);
+            }
+        }
 
-        // WRITE YOUR CODE HERE
+        collagePicture.show();
     }
 
     /*
@@ -147,7 +176,38 @@ public class Collage {
      */
     public void colorizeTile (String component,  int collageCol, int collageRow) {
 
-        // WRITE YOUR CODE HERE
+        for (int i = 0; i < collagePicture.height()/tileDimension; i++) {
+            for (int j = 0; j < collagePicture.height()/tileDimension; j++) {
+
+                if(i==collageRow && j==collageCol){
+                    
+                    for(int pixelRow = 0; pixelRow < tileDimension; pixelRow++){
+                        for(int pixelCol = 0; pixelCol < tileDimension; pixelCol++){
+
+                            Color pixelColor = collagePicture.get(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j));
+
+                            int r = pixelColor.getRed();
+                            int g = pixelColor.getGreen();
+                            int b = pixelColor.getBlue();
+
+                            if(component.equals("red")) {
+                                collagePicture.set(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j), new Color(r, 0, 0));
+                            }
+                            else if(component.equals("green")) {
+                                collagePicture.set(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j), new Color(0, g, 0));
+                            }
+                            else if(component.equals("blue")){
+                                collagePicture.set(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j), new Color(0, 0, b));
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+        collagePicture.show();
     }
 
     /*
@@ -160,8 +220,20 @@ public class Collage {
      */
     public void replaceTile (String filename,  int collageCol, int collageRow) {
 
-        // WRITE YOUR CODE HERE
-    }
+        Picture replacementTile = new Picture(filename);
+        Picture scaledReplacementTile = new Picture(tileDimension, tileDimension);
+        scale(replacementTile, scaledReplacementTile);
+
+        for (int i = 0; i < collagePicture.height()/tileDimension; i++) {
+            for (int j = 0; j < collagePicture.height()/tileDimension; j++) {
+                if(i==collageRow && j==collageCol){
+                    copy(i*tileDimension, j*tileDimension, scaledReplacementTile, collagePicture);
+                }
+            }
+        }
+
+        collagePicture.show();
+    }   
 
     /*
      * Grayscale tile at (collageCol, collageRow)
@@ -170,8 +242,32 @@ public class Collage {
      * @param collageRow tile row
      */
     public void grayscaleTile (int collageCol, int collageRow) {
+        
+        for (int i = 0; i < collagePicture.height()/tileDimension; i++) {
+            for (int j = 0; j < collagePicture.height()/tileDimension; j++) {
 
-        // WRITE YOUR CODE HERE
+                if(i==collageRow && j==collageCol){
+                    
+                    for(int pixelRow = 0; pixelRow < tileDimension; pixelRow++){
+                        for(int pixelCol = 0; pixelCol < tileDimension; pixelCol++){
+                            Color pixelColor = collagePicture.get(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j));
+                            //pixelColor.toGray();
+                        }
+                    }
+
+                }
+            }
+        }
+        
+    }
+
+    public static void copy(int row, int col, Picture source, Picture target) {
+        for (int i = 0; i < source.height(); i++) {
+            for (int j = 0; j < source.height(); j++) {
+                Color color = source.get(i, j);
+                target.set(i+col, j+row, color);
+            }
+        }   
     }
 
     /**
