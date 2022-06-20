@@ -179,24 +179,24 @@ public class Collage {
         for (int i = 0; i < collagePicture.width()/tileDimension; i++) {
             for (int j = 0; j < collagePicture.height()/tileDimension; j++) {
 
-                if(i==collageRow && j==collageCol){
+                if(i==collageCol && j==collageRow){
                     
                     for(int pixelRow = 0; pixelRow < tileDimension; pixelRow++){
                         for(int pixelCol = 0; pixelCol < tileDimension; pixelCol++){
 
-                            Color pixelColor = collagePicture.get(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j));
+                            Color pixelColor = collagePicture.get(pixelRow + (tileDimension * i), pixelCol + (tileDimension * j));
 
                             if(component.equals("red")) {
                                 int r = pixelColor.getRed();
-                                collagePicture.set(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j), new Color(r, 0, 0));
+                                collagePicture.set(pixelRow + (tileDimension * i), pixelCol + (tileDimension * j), new Color(r, 0, 0));
                             }
                             else if(component.equals("green")) {
                                 int g = pixelColor.getGreen();
-                                collagePicture.set(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j), new Color(0, g, 0));
+                                collagePicture.set(pixelRow + (tileDimension * i), pixelCol + (tileDimension * j), new Color(0, g, 0));
                             }
                             else if(component.equals("blue")){
                                 int b = pixelColor.getBlue();
-                                collagePicture.set(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j), new Color(0, 0, b));
+                                collagePicture.set(pixelRow + (tileDimension * i), pixelCol + (tileDimension * j), new Color(0, 0, b));
                             }
                         }
                     }
@@ -232,7 +232,7 @@ public class Collage {
         collagePicture.show();
     }   
 
-    /*
+    /**
      * Grayscale tile at (collageCol, collageRow)
      *
      * @param collageCol tile column
@@ -240,14 +240,13 @@ public class Collage {
      */
     public void grayscaleTile (int collageCol, int collageRow) {
         
-        for (int i = 0; i < collagePicture.width()/tileDimension; i++) {
+        for (int i = 0; i < collagePicture.height()/tileDimension; i++) {
             for (int j = 0; j < collagePicture.height()/tileDimension; j++) {
-                if(i==collageRow && j==collageCol){
+                if(i==collageCol && j==collageRow){
                     for(int pixelRow = 0; pixelRow < tileDimension; pixelRow++){
                         for(int pixelCol = 0; pixelCol < tileDimension; pixelCol++){
-                            Color pixelColor = collagePicture.get(pixelCol + (tileDimension * i), pixelRow + (tileDimension * j));
+                            Color pixelColor = collagePicture.get(pixelRow + (tileDimension * i), pixelCol + (tileDimension * j));
                             Color greyPixelColor = toGray(pixelColor);
-
                             collagePicture.set(pixelRow + (tileDimension * i), pixelCol + (tileDimension * j), greyPixelColor);
                         }
                     }
