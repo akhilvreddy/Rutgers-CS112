@@ -179,8 +179,8 @@ public class Warehouse {
         //change demand amount 
         sectors[id%10].get(indexOfItem).updateDemand(amount);
 
-        //fixing heap - we have to swim the product because it is more popular now
-        sectors[id%10].swim(indexOfItem);
+        //fixing heap - we have to sink the product because it is more popular now
+        sectors[id%10].sink(indexOfItem);
 
         //maybe even sink it too i'm not sure
     }
@@ -203,12 +203,16 @@ public class Warehouse {
 
         while(!productAdded){
 
-            if(counter==10)
+            if(counter==10){
+                addToEnd(id, name, stock, day, demand);
+                productAdded = true;
                 break;
-
-            if(sectors[id%10].getSize()==5){
+            }
+                
+            if(sectors[ourID%10].getSize()==5){
                 ourID++;
             }
+
             else{
                 addToEnd(ourID, name, stock, day, demand); 
                 productAdded = true;
@@ -217,8 +221,6 @@ public class Warehouse {
             counter++; 
         }
 
-        //if you reach the one you started at, then you need to call the original method: 
-        addToEnd(ourID, name, stock, day, demand);
     }
 
     /*
