@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch AdjList",
+            "request": "launch",
+            "mainClass": "prereqchecker.AdjList",
+            "projectName": "PreReqChecker_53217910"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
