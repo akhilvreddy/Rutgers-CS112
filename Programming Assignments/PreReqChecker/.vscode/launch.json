@@ -9,7 +9,8 @@
             "name": "Launch AdjList",
             "request": "launch",
             "mainClass": "prereqchecker.AdjList",
-            "projectName": "PreReqChecker_53217910"
+            "projectName": "PreReqChecker_53217910",
+            "args": "adjlist.in adjlist.out"
         },
         {
             "type": "java",
