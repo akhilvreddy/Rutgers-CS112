@@ -1,4 +1,5 @@
 package prereqchecker;
+import java.util.*;
 
 /**
  * Steps to implement this class main method:
@@ -23,14 +24,71 @@ package prereqchecker;
  * 1. 1 line, containing either the word "YES" or "NO"
  */
 public class ValidPrereq {
+
+    private static String bfs(HashMap<String, ArrayList<String>> hm, String target, String course) {
+        String ans = "";
+
+        if (hm.get(course) == null) {
+            ans = "YES";
+            return ans;
+        }
+
+        LinkedList<String> q = new LinkedList<String>();
+        q.add(course);
+
+        HashMap<String, Boolean> marked = new HashMap<>();
+        marked.put(course, true);
+
+        while (!q.isEmpty()) { // while the q is not empty
+            
+            String req = q.pop(); // we grab first off of q to check its prereqs
+            
+            if (hm.get(req) == null) {
+                ans = "YES";
+                return ans;
+            }
+
+            for (String s : hm.get(req)) { // for each prereq
+
+                if (marked.get(s) == null) { // if it is has not been checked
+                    if (s.equals(target)) { // if course2 has course1 as a prereq, then it wont work
+                        ans = "NO";
+                        return ans;
+                    }
+                    else {
+                        q.add(s);
+                        marked.put(s, true);
+                    }
+
+                }
+            }
+        }
+        return "YES";
+    }
+
+
     public static void main(String[] args) {
 
         if ( args.length < 3 ) {
             StdOut.println("Execute: java -cp bin prereqchecker.ValidPrereq <adjacency list INput file> <valid prereq INput file> <valid prereq OUTput file>");
             return;
         }
-	// WRITE YOUR CODE HERE
+	
+        AdjList adjList = new AdjList(args[0]);
+        
+        HashMap<String, ArrayList<String>> hm = adjList.getAdjList();
 
+        StdIn.setFile(args[1]);
+        String course1 = StdIn.readLine();
+        String course2 = StdIn.readLine();
+
+        StdOut.setFile(args[2]);
+
+        String ans = bfs(hm, course1, course2);
+        StdOut.println(ans);
     
     }
 }
+
+
+// c:; cd 'c:\Users\reddy\Documents\GitHub\CS112\Programming Assignments\PreReqChecker'; & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\reddy\AppData\Roaming\Code\User\workspaceStorage\4f2d78c4078b20c9906f3b4847e0574f\redhat.java\jdt_ws\PreReqChecker_53217910\bin' 'prereqchecker.ValidPrereq' 'adjlist.in' 'validprereq.in' 'validprereq.out'  

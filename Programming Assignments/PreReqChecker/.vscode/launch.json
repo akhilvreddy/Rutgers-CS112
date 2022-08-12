@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch NeedToTake",
+            "request": "launch",
+            "mainClass": "prereqchecker.NeedToTake",
+            "projectName": "PreReqChecker_53217910"
+        },
+        {
+            "type": "java",
+            "name": "Launch Eligible",
+            "request": "launch",
+            "mainClass": "prereqchecker.Eligible",
+            "projectName": "PreReqChecker_53217910"
+        },
+        {
+            "type": "java",
+            "name": "Launch ValidPrereq",
+            "request": "launch",
+            "mainClass": "prereqchecker.ValidPrereq",
+            "projectName": "PreReqChecker_53217910"
+        },
+        {
+            "type": "java",
             "name": "Launch AdjList",
             "request": "launch",
             "mainClass": "prereqchecker.AdjList",
