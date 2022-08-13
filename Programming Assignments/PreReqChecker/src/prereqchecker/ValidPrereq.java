@@ -28,6 +28,7 @@ public class ValidPrereq {
     private static String bfs(HashMap<String, ArrayList<String>> hm, String target, String course) {
         String ans = "";
 
+        //base case will see if there are no pre-reqs
         if (hm.get(course) == null) {
             ans = "YES";
             return ans;
@@ -39,19 +40,19 @@ public class ValidPrereq {
         HashMap<String, Boolean> marked = new HashMap<>();
         marked.put(course, true);
 
-        while (!q.isEmpty()) { // while the q is not empty
+        while (!q.isEmpty()) { 
             
-            String req = q.pop(); // we grab first off of q to check its prereqs
+            String req = q.pop(); 
             
             if (hm.get(req) == null) {
                 ans = "YES";
                 return ans;
             }
 
-            for (String s : hm.get(req)) { // for each prereq
+            for (String s : hm.get(req)) { 
 
-                if (marked.get(s) == null) { // if it is has not been checked
-                    if (s.equals(target)) { // if course2 has course1 as a prereq, then it wont work
+                if (marked.get(s) == null) { 
+                    if (s.equals(target)) { 
                         ans = "NO";
                         return ans;
                     }
@@ -90,5 +91,7 @@ public class ValidPrereq {
     }
 }
 
-
-// c:; cd 'c:\Users\reddy\Documents\GitHub\CS112\Programming Assignments\PreReqChecker'; & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\reddy\AppData\Roaming\Code\User\workspaceStorage\4f2d78c4078b20c9906f3b4847e0574f\redhat.java\jdt_ws\PreReqChecker_53217910\bin' 'prereqchecker.ValidPrereq' 'adjlist.in' 'validprereq.in' 'validprereq.out'  
+/*
+ * PUT THIS IS THE COMMAND LINE: 
+ * c:; cd 'c:\Users\reddy\Documents\GitHub\CS112\Programming Assignments\PreReqChecker'; & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\reddy\AppData\Roaming\Code\User\workspaceStorage\4f2d78c4078b20c9906f3b4847e0574f\redhat.java\jdt_ws\PreReqChecker_53217910\bin' 'prereqchecker.ValidPrereq' 'adjlist.in' 'validprereq.in' 'validprereq.out'   
+ */

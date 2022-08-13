@@ -36,15 +36,15 @@ public class NeedToTake {
             q.add(course);
         }
 
-        while (!q.isEmpty()) { // while the q is not empty
+        while (!q.isEmpty()) { 
             String req = q.pop();
-            if (hm.get(req) == null) { // we grab first off of q to check its prereqs
+            if (hm.get(req) == null) { 
                 marked.add(req);
             } 
             else {
-                for (String s : hm.get(req)) { // for each prereq
+                for (String s : hm.get(req)) { 
 
-                    if (!marked.contains(s)) { // if it is has not been checked
+                    if (!marked.contains(s)) { 
                         
                         q.add(s);
                         marked.add(s);
@@ -82,22 +82,18 @@ public class NeedToTake {
         HashSet<String> allTaken = new HashSet<>();
         
         allTaken = bfs(hm, takenCourses);
-        //System.out.println(allTaken);
         needToTake = bfs(hm, target);
-        //System.out.println(needToTake);
         for (String s : allTaken) {
             if (needToTake.contains(s)) needToTake.remove(s);
         }
         needToTake.remove(target[0]);
         for (String course : needToTake) {
             StdOut.println(course);
-        }
-        
+        }   
     }
-
-
-
 }
 
-//how to run: 
-//c:; cd 'c:\Users\reddy\Documents\GitHub\CS112\Programming Assignments\PreReqChecker'; & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\reddy\AppData\Roaming\Code\User\workspaceStorage\4f2d78c4078b20c9906f3b4847e0574f\redhat.java\jdt_ws\PreReqChecker_53217910\bin' 'prereqchecker.NeedToTake' 'adjlist.in' 'needtotake.in' 'needtotake.out'
+/*
+ * PUT THIS IS THE COMMAND LINE: 
+ * c:; cd 'c:\Users\reddy\Documents\GitHub\CS112\Programming Assignments\PreReqChecker'; & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\reddy\AppData\Roaming\Code\User\workspaceStorage\4f2d78c4078b20c9906f3b4847e0574f\redhat.java\jdt_ws\PreReqChecker_53217910\bin' 'prereqchecker.NeedToTake' 'adjlist.in' 'needtotake.in' 'needtotake.out' 
+ */

@@ -1,5 +1,4 @@
 package prereqchecker;
-
 import java.util.*;
 
 /**
@@ -37,15 +36,15 @@ public class SchedulePlan {
             q.add(course);
         }
 
-        while (!q.isEmpty()) { // while the q is not empty
+        while (!q.isEmpty()) { 
             String req = q.pop();
-            if (hm.get(req) == null) { // we grab first off of q to check its prereqs
+            if (hm.get(req) == null) { 
                 marked.add(req);
             } 
             else {
-                for (String s : hm.get(req)) { // for each prereq
+                for (String s : hm.get(req)) { 
 
-                    if (!marked.contains(s)) { // if it is has not been checked
+                    if (!marked.contains(s)) { 
                         
                         q.add(s);
                         marked.add(s);
@@ -59,8 +58,6 @@ public class SchedulePlan {
 
     public static ArrayList<ArrayList<String>> scheduleBuilder(HashMap<String, ArrayList<String>> hm, HashSet<String> allTaken, HashSet<String> needToTake) {
         
-        //System.out.println("All courses taken are: " + allTaken);
-        //System.out.println("All courses needed to be taken are: " + needToTake);
         LinkedList<String> q = new LinkedList<>();
 
         ArrayList<ArrayList<String>> schedule = new ArrayList<>();
@@ -70,34 +67,21 @@ public class SchedulePlan {
             q.add(key);
         }
 
-        //System.out.println("The Queue is: "  + q);
-
         while(!q.isEmpty()) {
             
             ArrayList<String> semester = new ArrayList<>();
             
             for (int i = 0; i < q.size(); i ++) {
                 
-                if (hm.get(q.get(i)) == null) { //Its a course we havent taken that we are eligible to take
+                if (hm.get(q.get(i)) == null) { 
                     String toAdd = q.get(i);
-                    //System.out.println(toAdd + " is eligible to take");
-                    //allTaken.add(toAdd);
-                    //System.out.println("After adding " + toAdd + " All courses taken are: " + allTaken);
                     semester.add(toAdd);
-                    //System.out.println("The semester is: " + semester);
-                    //System.out.println("After removing, the q is: " + q);
                 }
-                else { //if we have taken all the prereqs of the course, we can add it
+                else { 
                     ArrayList<String> prereqs = hm.get(q.get(i));
                     if (allTaken.containsAll(prereqs)) {
                         String toAdd = q.get(i);
-                        //System.out.println(toAdd + " is eligible to take");
-                        //allTaken.add(toAdd);
-                        //System.out.println("After adding " + toAdd + " All courses taken are: " + allTaken);
                         semester.add(toAdd);
-                        //System.out.println("The semester is: " + semester);
-                        //System.out.println("After removing, the q is: " + q);
-
                     }
                 }
             }
@@ -105,8 +89,6 @@ public class SchedulePlan {
             for (int j = 0; j < semester.size(); j ++) {
                 allTaken.add(semester.get(j));
                 q.remove(semester.get(j));
-                //System.out.println(semester.get(j) + " removed from q. Q is: " + q);
-                //System.out.println(semester.get(j) + " added to allTaken: " + allTaken);
             }
             schedule.add(semester);
 
@@ -121,25 +103,23 @@ public class SchedulePlan {
             return;
         }
         
-        StdIn.setFile(args[1]); // set files for input and output
+        StdIn.setFile(args[1]);
         StdOut.setFile(args[2]);
         
         String[] target = new String[1];
-        target[0] = StdIn.readLine(); // read target
-        int e = StdIn.readInt(); //read number of taken courses
-        StdIn.readLine(); // buffer
+        target[0] = StdIn.readLine(); 
+        int e = StdIn.readInt(); 
+        StdIn.readLine(); 
         
-        // add taken courses to an array
         String[] courses = new String[e];
         for (int i = 0; i < e; i ++) {
             courses[i] = StdIn.readLine();
         }
 
         AdjList adjList = new AdjList(args[0]);
-        HashMap<String, ArrayList<String>> hm = adjList.getAdjList(); // import adjacency list
+        HashMap<String, ArrayList<String>> hm = adjList.getAdjList(); 
         
-        HashSet<String> allTaken = bfs(hm, courses); // get all courses taken
-        //System.out.println(allTaken);
+        HashSet<String> allTaken = bfs(hm, courses);
         HashSet<String> needToTake = bfs(hm, target);
         for (String s : allTaken) {
             if (needToTake.contains(s)) needToTake.remove(s);
@@ -147,11 +127,9 @@ public class SchedulePlan {
         }
 
         needToTake.remove(target[0]);
-        
 
         ArrayList<ArrayList<String>> schedule = scheduleBuilder(hm, allTaken, needToTake);
 
-        //System.out.println();
         StdOut.println(schedule.size());
         for (ArrayList<String> semester : schedule) {
             String line = "";
@@ -160,10 +138,11 @@ public class SchedulePlan {
             }
             StdOut.println(line);
         }
-
         
     }
 }
 
-//how to run: 
-//c:; cd 'c:\Users\reddy\Documents\GitHub\CS112\Programming Assignments\PreReqChecker'; & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\reddy\AppData\Roaming\Code\User\workspaceStorage\4f2d78c4078b20c9906f3b4847e0574f\redhat.java\jdt_ws\PreReqChecker_53217910\bin' 'prereqchecker.SchedulePlan' 'adjlist.in' 'scheduleplan.in' 'scheduleplan.out'
+/*
+ * PUT THIS IS THE COMMAND LINE: 
+ * c:; cd 'c:\Users\reddy\Documents\GitHub\CS112\Programming Assignments\PreReqChecker'; & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\reddy\AppData\Roaming\Code\User\workspaceStorage\4f2d78c4078b20c9906f3b4847e0574f\redhat.java\jdt_ws\PreReqChecker_53217910\bin' 'prereqchecker.SchedulePlan' 'adjlist.in' 'scheduleplan.in' 'scheduleplan.out' 
+ */

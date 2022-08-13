@@ -23,6 +23,7 @@ public class AdjList {
     //our main adjacency list 
     private HashMap<String, ArrayList<String>> adjList = new HashMap<>(); 
 
+    //creating the list and initiating it
     public AdjList(String inputFile){
         StdIn.setFile(inputFile);
 
@@ -86,7 +87,7 @@ public class AdjList {
     }
 }
 
-//PUT THIS IS THE COMMAND LINE: 
-//java -cp bin prereqchecker.AdjList adjlist.in adjlist.out -> not working because of some issues 
-
-// c:; cd 'c:\Users\reddy\Documents\GitHub\CS112\Programming Assignments\PreReqChecker'; & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\reddy\AppData\Roaming\Code\User\workspaceStorage\4f2d78c4078b20c9906f3b4847e0574f\redhat.java\jdt_ws\PreReqChecker_53217910\bin' 'prereqchecker.AdjList' 'adjlist.in' 'adjlist.out'
+/*
+ * PUT THIS IS THE COMMAND LINE: 
+ * c:; cd 'c:\Users\reddy\Documents\GitHub\CS112\Programming Assignments\PreReqChecker'; & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.3.7-hotspot\bin\java.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '-cp' 'C:\Users\reddy\AppData\Roaming\Code\User\workspaceStorage\4f2d78c4078b20c9906f3b4847e0574f\redhat.java\jdt_ws\PreReqChecker_53217910\bin' 'prereqchecker.AdjList' 'adjlist.in' 'adjlist.out' 
+ */
